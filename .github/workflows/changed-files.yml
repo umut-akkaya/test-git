@@ -1,0 +1,20 @@
+---
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  git-diff:
+    runs-on: ubuntu-latest,
+    steps:
+      - name: Check if branch is ahead of main
+        run: |
+          if ! git merge-base --is-ancestor origin/main ${{ github.event.pull_request.head.sha }};
+          then echo "This branch is not up to date with main. Please update the branch";
+          exit 1; fi
+
+      - name: Find Changed Files
+        run: |
+          git diff --name-only $(git rev-parse $(git branch --show-current)) $(git rev-parse origin/main)
