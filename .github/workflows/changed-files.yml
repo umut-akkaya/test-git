@@ -1,4 +1,6 @@
 ---
+name: List Changed Files
+
 on:
   pull_request:
     types:
@@ -7,7 +9,7 @@ on:
 
 jobs:
   git-diff:
-    runs-on: ubuntu-latest,
+    runs-on: ubuntu-latest
     steps:
       - name: Check if branch is ahead of main
         run: |
